@@ -37,7 +37,7 @@ module.exports.create = async(req,res)=>{
          if(req.body.password != req.body.confirm_password) {
             // console.log(req.body);
             console.log('Password mismatch!');
-           
+            req.flash('error', 'Password mismatch');
             return res.redirect('back');
         }
         let user = await User.findOne({ email: req.body.email });
@@ -56,6 +56,13 @@ module.exports.create = async(req,res)=>{
         console.log('Error in creating the user ', error);
         return res.redirect('back');
     }
+}
+
+
+// signs in existing user
+module.exports.createSession = async function(req, res) {
+    req.flash('success', 'You are logged in!');
+    return res.redirect('/');
 }
 
 
