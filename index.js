@@ -10,11 +10,12 @@ const app = express();
 
 const port = process.env.port || 8080;
 
-
-
 // db connection
 connect();
 
+// require connect-flash
+const flash = require('connect-flash');
+const flashMiddleware = require('./config/flashMiddleware');
 
 // used for session cookies
 const session = require("express-session");
@@ -57,8 +58,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
 
-
-
+// flash middleware
+app.use(flash());
+app.use(flashMiddleware.setFlash);
 
 // use express router
 app.use("/",require("./routes"))
