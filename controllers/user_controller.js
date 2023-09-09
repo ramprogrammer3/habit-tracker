@@ -29,5 +29,34 @@ module.exports.signIn = async function(req, res) {
 }
 
 
+// create a new user
+
+module.exports.create = async(req,res)=>{
+    try {
+         // console.log(req.body);
+         if(req.body.password != req.body.confirm_password) {
+            // console.log(req.body);
+            console.log('Password mismatch!');
+           
+            return res.redirect('back');
+        }
+        let user = await User.findOne({ email: req.body.email });
+        // if user is not present 
+        if (!user) {
+            // create the user 
+            // console.log(req.body);
+            await User.create(req.body);
+            // redirect to sign in page
+            return res.redirect("/users/sign-in");
+        }
+        console.log('User is already present');
+        return res.redirect('back');
+        
+    } catch (error) {
+        console.log('Error in creating the user ', error);
+        return res.redirect('back');
+    }
+}
+
 
 
