@@ -28,7 +28,8 @@ app.use(express.static('./assets'));
 
 
 
-
+// use express router
+app.use("/",require("./routes"))
 
 app.listen(port,()=>{
     console.log(`server is running on port ${port}`)
