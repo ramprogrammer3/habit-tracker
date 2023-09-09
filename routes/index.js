@@ -2,7 +2,7 @@ const express = require("express");
 const passport = require('passport');
 const router = express.Router();
 
-const {signUp, signIn, create, createSession, destroySession, forgetPassword} = require("../controllers/user_controller");
+const {signUp, signIn, create, createSession, destroySession, forgetPassword, resetPassword} = require("../controllers/user_controller");
 const {home} = require("../controllers/home_controller");
 
 router.get("/",home);
@@ -19,7 +19,11 @@ router.post("/users/create-session",passport.authenticate(
 // used for deleting the user session
 router.get("/users/sign-out",destroySession);
 
+// take to forget password page
 router.get("users/forget-password",forgetPassword)
+// change the password
+
+router.post("/users/reset-password",resetPassword)
 
 
 module.exports = router;

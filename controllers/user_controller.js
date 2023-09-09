@@ -89,4 +89,23 @@ module.exports.forgetPassword = async function(req, res) {
 }
 
 
+// reset password
+module.exports.resetPassword = async function(req, res) {
+    try {
+        let user = await User.findOne({email : req.body.email});
+
+        if(!user) {
+            return res.render('/users/sign-up')
+        }
+        if(req.body.password==req.body.confirm_password) {
+            user.password = req.body.password;
+            await user.updateOne({password : req.body.password});
+            req.flash('success', 'Password changed successfully');
+            return res.redirect('/users/sign-in');
+        }
+    } catch (error) {
+        console.log('Error in habitController/resetPassword: ', error);
+        return;
+    }
+}
 
