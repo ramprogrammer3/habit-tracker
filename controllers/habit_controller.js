@@ -75,3 +75,62 @@ module.exports.toggleStatus = async function(req, res) {
     }
 }
 
+
+// this function removes the habit
+module.exports.deleteHabit = async function(req, res) {
+    try {
+        let id = req.query.id;
+        let user = req.user._id;
+
+        await Habit.deleteOne({ _id : id, user: user });
+        req.flash('success', 'Habit Deleted Successfully');
+        return res.redirect('/');
+        
+    } catch (error) {
+        console.log('Error in habitController/deleteHabit', error);
+        return res.render('404', {
+            title: "Not Found"
+        })
+    }
+}
+
+
+// this function will edit the habit title/desc
+module.exports.editHabit = async function(req, res) {
+    try {
+        let newTitle = req.body.title;
+        let newDesc = req.body.desc;
+        let id = req.query.id;
+        let user = req.user._id;
+
+        let updatedResult = await Habit.findByIdAndUpdate(
+            {
+                _id: id,
+                user: user
+            }, {
+                title: newTitle,
+                desc: newDesc
+            }
+        );
+        // console.log(updatedResult);
+        req.flash('success', 'Habit Updated Successfully');
+        return res.redirect('/');
+        
+    } catch (error) {
+        console.log('Error in habitController/editHabit', error);
+        return res.render('404', {
+            title: "Not Found"
+        })
+    }
+}
+
+
+// this fucntion will return the current data, which will helpful for getting the range of dates
+function getTodayDate(){
+    var today = new Date();
+    let date = today.getDate();
+    let month = today.getMonth()+1;
+
+    let fullDate = month + " " + date;
+    return fullDate;
+}
