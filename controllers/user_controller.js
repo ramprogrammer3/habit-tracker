@@ -65,5 +65,16 @@ module.exports.createSession = async function(req, res) {
     return res.redirect('/');
 }
 
+// signs out the user
+module.exports.destroySession = async function(req, res, done) {
+    req.logout((err) => {
+        if (err) {
+            return done(err);
+        }
+    });
+    req.flash('success' , 'You are logged out!');
+    return res.redirect('/users/sign-in');
+}
+
 
 
