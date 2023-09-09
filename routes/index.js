@@ -26,4 +26,14 @@ router.get("users/forget-password",forgetPassword)
 router.post("/users/reset-password",resetPassword)
 
 
+const {createHabit, toggleStatus} = require("../controllers/habit_controller");
+
+// create a new habit
+router.post("/habit/create-habit",createHabit);
+
+// change the status of habit
+
+router.get("/habit/toggle-status",toggleStatus);
+
+
 module.exports = router;
