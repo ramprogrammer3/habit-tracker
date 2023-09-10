@@ -1,12 +1,23 @@
 
-
+const Habit = require("../models/Habit");
 
 // this function takes user to home
 module.exports.home = async function(req, res) {
 
-    return res.render('home',{
-        title : "Habit Tracker"
-    })
+    if(req.user){
+        let habits = await Habit.find({user: req.user._id}); 
+        // console.log(habits)
+        
+        return res.render('home', {
+            title : "Habit Tracker",
+            habits : habits,
+            weeklyDates : await getOneWeekDate()
+        })
+    }else{
+        return res.render('home', {
+            title: "Home"
+        });
+    }
 }
 
 
@@ -24,4 +35,11 @@ function getOneWeekDate(){
         dates.push(mm +" " +dd);
     }
     return dates;
+}
+
+
+module.exports.notFound = async function(req, res) {
+    return res.render('404', {
+        title :'Not Found!'
+    });
 }

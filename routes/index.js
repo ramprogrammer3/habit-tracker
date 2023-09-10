@@ -3,7 +3,7 @@ const passport = require('passport');
 const router = express.Router();
 
 const { signUp, signIn, create, createSession, destroySession, forgetPassword, resetPassword } = require("../controllers/user_controller");
-const { home } = require("../controllers/home_controller");
+const { home, notFound } = require("../controllers/home_controller");
 
 router.get("/", home);
 router.get("/users/sign-up", signUp);
@@ -29,18 +29,20 @@ router.post("/users/reset-password", resetPassword)
 const { createHabit, toggleStatus, deleteHabit, editHabit } = require("../controllers/habit_controller");
 
 // create a new habit
-router.post("/habit/create-habit", createHabit);
+router.post("/users/habit/create-habit", createHabit);
 
 // change the status of habit
 
-router.get("/habit/toggle-status", toggleStatus);
+router.get("/users/habit/toggle-status", toggleStatus);
 
 // delete the habit
-router.get("/habit/delete-habit", deleteHabit);
+router.get("/users/habit/delete-habit", deleteHabit);
 
 // update the habit
 
-router.post("/habit/edit-habit", editHabit)
+router.post("/users/habit/edit-habit", editHabit)
+
+router.get("/404",notFound)
 
 
 module.exports = router;
