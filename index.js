@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.set('view engine', 'ejs');
 // app.set('views', './views');
 app.set("views",path.join(__dirname,"views"))
-app.use(express.static(__dirname +'./assets')); 
+app.use(express.static(__dirname +'/assets')); 
 
 //mongo store is used to store the session cookie
 app.use(session({
