@@ -1,5 +1,6 @@
 const express =require('express');
 require("dotenv").config();
+const path = require("path");
 
 const connect = require("./config/dbConnect");
 
@@ -30,7 +31,8 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 // set up the view engine
 app.set('view engine', 'ejs');
-app.set('views', './views');
+// app.set('views', './views');
+app.set("views",path.join(__dirname,"views"))
 app.use(express.static('./assets')); 
 
 //mongo store is used to store the session cookie
